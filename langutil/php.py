@@ -125,3 +125,38 @@ def generate_array(list_or_array, indent=2, last_level=0, end=';'):
     parts.append(last_line)
 
     return '\n'.join(parts)
+
+def serialize(mixed_value):
+    """Based on http://phpjs.org/functions/serialize/"""
+    ktype = vals = ''
+    count = 0
+
+    if type(mixed_value) is bool:
+        if mixed_value:
+            return 'b:1;'
+        else:
+            return 'b:0;'
+    elif type(mixed_value) is int:
+        return 'i:%d;' % (mixed_value)
+    elif type(mixed_value) is float:
+        return 'd:%f;' % (mixed_value)
+    elif type(mixed_value) is str:
+        return 's:%d:"%s";' % (len(mixed_value), mixed_value)
+
+    if type(mixed_value) in (tuple, list, set):
+        length = len(mixed_value)
+        serialized_set = []
+        index = 0
+        for value in mixed_value:
+            serialized_set.append(serialize(index))
+            serialized_set.append(serialize(value))
+            index += 1
+        return 'a:%d:{%s}' % (length, ''.join(serialized_set),)
+
+    # Dictionary
+    length = len(mixed_value)
+    serialized_set = []
+    for (key, value) in mixed_value.items():
+        serialized_set.append(serialize(key))
+        serialized_set.append(serialize(value))
+    return 'a:%d:{%s}' % (length, ''.join(serialized_set),)
