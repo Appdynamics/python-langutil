@@ -91,3 +91,9 @@ array(
   'special' => "\n",
 );
 ```
+
+### Serialisation
+
+Use `php.serialize(data_arg)` for serialising data in PHP's special serialisation format. There is not yet an `unserialize()` equivalent function.
+
+Note that the types `list`, `tuple`, `set`, and `dict` become PHP arrays (the serialisation format requires 'keys' to be created for lists so these become integers but should be an equivalent 'integer-based array' in PHP (the number keys do *not* become string keys).
