@@ -108,11 +108,16 @@ Serialisation
 ~~~~~~~~~~~~~
 
 Use ``php.serialize(data_arg)`` for serialising data in PHP's special
-serialisation format. There is not yet an ``unserialize()`` equivalent
-function.
+serialisation format. The module will try to use the module
+``phpserialize`` for this first but has a fallback version in pure
+Python for simple values (does not handle 'classes', references, or
+'objects').
 
 Note that the types ``list``, ``tuple``, ``set``, and ``dict`` become
 PHP arrays (the serialisation format requires 'keys' to be created for
 lists so these become integers but should be an equivalent
 'integer-based array' in PHP (the number keys do *not* become string
 keys).
+
+To unserialize, use ``php.unserialize(str_arg)`` which requires the
+``phpserialize`` module.
