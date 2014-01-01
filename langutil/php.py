@@ -131,6 +131,7 @@ def generate_array(list_or_array, indent=2, last_level=0, end=';'):
 
     return '\n'.join(parts)
 
+
 def serialize(mixed_value):
     try:
         from phpserialize import serialize as s
@@ -173,6 +174,7 @@ def serialize(mixed_value):
         serialized_set.append(serialize(key))
         serialized_set.append(serialize(value))
     return 'a:%d:{%s}' % (length, ''.join(serialized_set),)
+
 
 def unserialize(str):
     from phpserialize import unserialize as u
