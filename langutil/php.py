@@ -56,7 +56,7 @@ def generate_scalar(scalar_val, upper_keywords=True):
     elif type(scalar_val) is int:
         ret = '%d' % (scalar_val)
     elif type(scalar_val) is float:
-        ret = '%f' % (scalar_val)
+        ret = ('%f' % (scalar_val)).rstrip('0')
 
     if ret is None:
         raise PHPScalarException('Non-acceptable type: %s' %
@@ -66,8 +66,13 @@ def generate_scalar(scalar_val, upper_keywords=True):
 
 
 def generate_array(list_or_array, indent=2, last_level=0, end=';'):
-    spaces = ''.join([' ' for i in range(0, indent)])
-    end_bracket_spaces = ''.join([' ' for i in range(0, indent - last_level)])
+    val = indent
+    if last_level > 0:
+        val *= last_level
+        val += indent
+
+    spaces = ''.join([' ' for i in range(0, val)])
+    end_bracket_spaces = ''.join([' ' for i in range(0, val - indent)])
 
     if type(list_or_array) in (tuple, list, set):
         parts = [
@@ -80,9 +85,9 @@ def generate_array(list_or_array, indent=2, last_level=0, end=';'):
             else:
                 parts.append('%s%s' % (spaces,
                                        generate_array(item,
-                                                      indent=indent + indent,
+                                                      indent=indent,
                                                       end=',',
-                                                      last_level=indent)))
+                                                      last_level=last_level + 1)))
 
         parts.append('%s)%s' % (end_bracket_spaces, end))
 
@@ -101,8 +106,8 @@ def generate_array(list_or_array, indent=2, last_level=0, end=';'):
         value = list_or_array[key]
         is_scalar = type(value) not in (tuple, list, set, dict)
         if not is_scalar:
-            value = generate_array(value, indent=indent + indent,
-                                   end=',', last_level=indent)
+            value = generate_array(value, indent=indent,
+                                   end=',', last_level=last_level + 1)
         else:
             value = generate_scalar(value)
 
@@ -123,9 +128,6 @@ def generate_array(list_or_array, indent=2, last_level=0, end=';'):
         ))
 
     last_line = '%s)%s' % (end_bracket_spaces, end)
-
-    if end == ';':
-        last_line = last_line[indent:]
 
     parts.append(last_line)
 
