@@ -1,3 +1,5 @@
+.. image:: https://travis-ci.org/Appdynamics/python-langutil.png?branch=develop   :target: https://travis-ci.org/Appdynamics/python-langutil
+
 Language Utility
 ================
 
@@ -121,3 +123,6 @@ keys).
 
 To unserialize, use ``php.unserialize(str_arg)`` which requires the
 ``phpserialize`` module.
+
+.. |Build Status| image:: https://travis-ci.org/Appdynamics/python-langutil.png?branch=develop
+   :target: https://travis-ci.org/Appdynamics/python-langutil
