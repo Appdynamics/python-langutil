@@ -2,7 +2,7 @@ import re
 import sys
 
 
-_CNTRL_CHARS = map(chr, range(0x0, 0x1f) + [0x7f])
+_CNTRL_CHARS = map(chr, list(range(0x0, 0x1f)) + [0x7f])
 _SERIALIZED_ARRAY_REGEX = re.compile(r'(a\:\d+\:\{[is]\:[^\}]+})')
 
 
