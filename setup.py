@@ -10,4 +10,7 @@ setup(
     license='LICENSE.txt',
     description='Helpers for generating code.',
     long_description=open('README.rst').read(),
+    install_requires=[
+        'phpserialize==1.3',
+    ],
 )
