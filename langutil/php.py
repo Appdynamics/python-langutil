@@ -1,4 +1,4 @@
-from phpserialize import unserialize
+from phpserialize import unserialize as _unser
 import re
 import sys
 
@@ -180,4 +180,4 @@ def serialize(mixed_value):
 
 
 def unserialize(str):
-    return unserialize(str)
+    return _unser(str)
